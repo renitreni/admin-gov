@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('reportings', function (Blueprint $table) {
             $table->id();
+            $table->string('passport');
             $table->dateTime('report_date');
             $table->text('report_description');
             $table->string('location');

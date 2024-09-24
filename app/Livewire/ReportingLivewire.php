@@ -2,9 +2,11 @@
 
 namespace App\Livewire;
 
+use App\Models\Reporting;
 use App\Models\Worker;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
+use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 
 class ReportingLivewire extends Component
 {
@@ -14,9 +16,13 @@ class ReportingLivewire extends Component
 
     public $passport;
 
-    public $dateReport;
-
     public $worker;
+
+    public $location;
+
+    public $reportDescription;
+
+    public $dateReport;
 
     public function mount()
     {
@@ -41,7 +47,7 @@ class ReportingLivewire extends Component
             'pin' => 'required',
         ]);
 
-        $this->worker = Cache::rememberForever('report-'.$this->passport.$this->pin, function () {
+        $this->worker = Cache::rememberForever('report-' . $this->passport . $this->pin, function () {
             return Worker::with('agency')
                 ->where('passport_number', $this->passport)
                 ->where('pin', $this->pin)
@@ -52,37 +58,30 @@ class ReportingLivewire extends Component
             $this->addError('authentication', 'Details does not exist!');
         } else {
             $this->open = 1;
+            $this->js("window.getGeo()");
         }
-
-        // "id" => 1
-        // "worker_uuid" => "d140f6e8-9f6b-44a0-a60b-278282535696"
-        // "first_name" => "Obie"
-        // "last_name" => "Kiehn"
-        // "middle_name" => "Altenwerth"
-        // "pin" => "1649"
-        // "suffix_name" => null
-        // "passport_number" => "FCTHPSYG3ZP"
-        // "passport_expiry_date" => "2031-11-19"
-        // "visa_type" => "worker"
-        // "visa_number" => "POCAQH80"
-        // "visa_expiry_date" => "2025-11-28"
-        // "national_id_number" => "KOQACQDWVY1"
-        // "residency_address" => """
-        //   547 Pacocha Plains Suite 313
-    
-        //   Buckridgefort, WY 77773-4039
-        //   """
-        // "emergency_contact_name" => "Domenica Kris"
-        // "emergency_contact_phone" => "(831) 362-3617"
-        // "emergency_contact_relationship" => "relative"
-        // "created_at" => "2024-09-24 07:23:31"
-        // "updated_at" => "2024-09-24 07:23:31"
-        // "deleted_at" => null
     }
 
     public function cancelPanel()
     {
         $this->open = 0;
         $this->worker = null;
+    }
+
+    public function submitReport()
+    {
+        $this->validate([
+            'reportDescription' => 'required'
+        ]);
+
+        $reporting = new Reporting();
+        $reporting->passport = $this->passport;
+        $reporting->report_date = $this->dateReport;
+        $reporting->report_description = $this->reportDescription;
+        $reporting->location = $this->location;
+        $reporting->save();
+
+        session()->flash('status', 'Thank you! Report submitted!');
+        $this->redirect('/reporting');
     }
 }
