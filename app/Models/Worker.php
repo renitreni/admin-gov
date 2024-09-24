@@ -40,4 +40,9 @@ class Worker extends Model
     {
         return Attribute::make(get: fn ($value, $row) => $row['first_name'] . ' ' . $row['last_name']);
     }
+
+    public function agency()
+    {
+        return $this->belongsTo(Agency::class);
+    }
 }

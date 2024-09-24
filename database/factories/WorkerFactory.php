@@ -20,6 +20,7 @@ class WorkerFactory extends Factory
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
             'middle_name' => fake()->lastName(),
+            'pin' => fake()->randomNumber(4),
             'passport_number' => fake()->swiftBicNumber(),
             'passport_expiry_date' => fake()->dateTimeBetween('now', '10 years')->format('Y-m-d'),
             'visa_type' => 'worker',

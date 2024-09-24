@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Agency;
 use App\Models\User;
 use App\Models\Worker;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -22,7 +23,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         if (app()->environment('local')) {
-            Worker::factory(100)->create();
+            Agency::factory(10)->has(Worker::factory(100))->create();
         }
     }
 }

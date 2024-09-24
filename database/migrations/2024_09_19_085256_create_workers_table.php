@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Agency;
+use App\Models\Worker;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,6 +19,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('middle_name');
+            $table->string('pin');
             $table->string('suffix_name')->nullable();
             $table->string('passport_number')->unique();
             $table->date('passport_expiry_date');
@@ -28,6 +31,7 @@ return new class extends Migration
             $table->string('emergency_contact_name')->nullable();
             $table->string('emergency_contact_phone')->nullable();
             $table->string('emergency_contact_relationship')->nullable();
+            $table->foreignIdFor(Agency::class);
             $table->timestamps(); // created_at, updated_at
             $table->softDeletes();
         });
