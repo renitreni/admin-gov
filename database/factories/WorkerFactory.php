@@ -28,7 +28,7 @@ class WorkerFactory extends Factory
             'visa_expiry_date' => fake()->dateTimeBetween('now', '4 years')->format('Y-m-d'),
             'national_id_number' => fake()->swiftBicNumber(),
             'residency_address' => fake()->address(),
-            'emergency_contact_name' => fake()->name(), 
+            'emergency_contact_name' => fake()->name(),
             'emergency_contact_phone' => fake()->phoneNumber(),
             'emergency_contact_relationship' => 'relative',
         ];

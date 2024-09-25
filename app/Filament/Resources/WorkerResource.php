@@ -3,16 +3,13 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\WorkerResource\Pages;
-use App\Filament\Resources\WorkerResource\RelationManagers;
 use App\Models\Worker;
-use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class WorkerResource extends Resource
 {
@@ -24,7 +21,20 @@ class WorkerResource extends Resource
     {
         return $form
             ->schema([
-                //
+                TextInput::make('first_name')->required(),
+                TextInput::make('last_name')->required(),
+                TextInput::make('middle_name')->required(),
+                TextInput::make('suffix_name'),
+                TextInput::make('passport_number')->required()->unique(ignoreRecord: true),
+                TextInput::make('passport_expiry_date')->required(),
+                TextInput::make('visa_type'),
+                TextInput::make('visa_number'),
+                TextInput::make('visa_expiry_date'),
+                TextInput::make('national_id_number'),
+                TextInput::make('residency_address'),
+                TextInput::make('emergency_contact_name'),
+                TextInput::make('emergency_contact_phone'),
+                TextInput::make('emergency_contact_relationship'),
             ]);
     }
 
@@ -32,10 +42,9 @@ class WorkerResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('fullname')->sortable(['first_name', 'last_name']),
-                TextColumn::make('last_name'),
-                TextColumn::make('passport_number'),
-                TextColumn::make('national_id_number'),
+                TextColumn::make('fullname')->sortable(['first_name', 'last_name'])->searchable(['first_name', 'last_name']),
+                TextColumn::make('passport_number')->sortable()->searchable(),
+                TextColumn::make('national_id_number')->sortable()->searchable(),
             ])
             ->filters([
                 //

@@ -18,7 +18,7 @@ class AgencyFactory extends Factory
     {
         return [
             'agency_name' => fake()->company(),
-            'agency_status' => fake()->randomElement(['good', 'warning', 'danger'])
+            'agency_status' => fake()->randomElement(['good', 'warning', 'banned']),
         ];
     }
 }

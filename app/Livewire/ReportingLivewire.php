@@ -6,7 +6,6 @@ use App\Models\Reporting;
 use App\Models\Worker;
 use Illuminate\Support\Facades\Cache;
 use Livewire\Component;
-use SebastianBergmann\CodeCoverage\Report\Xml\Report;
 
 class ReportingLivewire extends Component
 {
@@ -47,7 +46,7 @@ class ReportingLivewire extends Component
             'pin' => 'required',
         ]);
 
-        $this->worker = Cache::rememberForever('report-' . $this->passport . $this->pin, function () {
+        $this->worker = Cache::rememberForever('report-'.$this->passport.$this->pin, function () {
             return Worker::with('agency')
                 ->where('passport_number', $this->passport)
                 ->where('pin', $this->pin)
@@ -58,7 +57,7 @@ class ReportingLivewire extends Component
             $this->addError('authentication', 'Details does not exist!');
         } else {
             $this->open = 1;
-            $this->js("window.getGeo()");
+            $this->js('window.getGeo()');
         }
     }
 
@@ -71,10 +70,10 @@ class ReportingLivewire extends Component
     public function submitReport()
     {
         $this->validate([
-            'reportDescription' => 'required'
+            'reportDescription' => 'required',
         ]);
 
-        $reporting = new Reporting();
+        $reporting = new Reporting;
         $reporting->passport = $this->passport;
         $reporting->report_date = $this->dateReport;
         $reporting->report_description = $this->reportDescription;
