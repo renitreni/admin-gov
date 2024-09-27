@@ -8,6 +8,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -45,6 +46,14 @@ class WorkerResource extends Resource
                 TextColumn::make('fullname')->sortable(['first_name', 'last_name'])->searchable(['first_name', 'last_name']),
                 TextColumn::make('passport_number')->sortable()->searchable(),
                 TextColumn::make('national_id_number')->sortable()->searchable(),
+                TextColumn::make('agency.agency_name')->sortable()->searchable(),
+                TextColumn::make('agency.agency_status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'warning' => 'warning',
+                        'good' => 'success',
+                        'banned' => 'danger',
+                    })
             ])
             ->filters([
                 //

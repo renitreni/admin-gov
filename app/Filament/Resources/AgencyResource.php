@@ -34,7 +34,13 @@ class AgencyResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('agency_name')->sortable()->searchable(),
-                TextColumn::make('agency_status')->sortable()->searchable(),
+                TextColumn::make('agency_status')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'warning' => 'warning',
+                        'good' => 'success',
+                        'banned' => 'danger',
+                    })
             ])
             ->filters([
                 //
