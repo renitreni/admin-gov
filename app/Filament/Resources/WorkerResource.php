@@ -8,7 +8,6 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\ColorColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -16,7 +15,9 @@ class WorkerResource extends Resource
 {
     protected static ?string $model = Worker::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     public static function form(Form $form): Form
     {
@@ -49,11 +50,11 @@ class WorkerResource extends Resource
                 TextColumn::make('agency.agency_name')->sortable()->searchable(),
                 TextColumn::make('agency.agency_status')
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'warning' => 'warning',
                         'good' => 'success',
                         'banned' => 'danger',
-                    })
+                    }),
             ])
             ->filters([
                 //

@@ -16,7 +16,9 @@ class AgencyResource extends Resource
 {
     protected static ?string $model = Agency::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $navigationIcon = 'heroicon-o-building-office';
 
     public static function form(Form $form): Form
     {
@@ -36,11 +38,11 @@ class AgencyResource extends Resource
                 TextColumn::make('agency_name')->sortable()->searchable(),
                 TextColumn::make('agency_status')
                     ->badge()
-                    ->color(fn(string $state): string => match ($state) {
+                    ->color(fn (string $state): string => match ($state) {
                         'warning' => 'warning',
                         'good' => 'success',
                         'banned' => 'danger',
-                    })
+                    }),
             ])
             ->filters([
                 //

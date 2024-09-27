@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ReportingResource\Pages;
-use App\Models\Reporting;
+use App\Filament\Resources\UserResource\Pages;
+use App\Models\User;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -11,27 +11,22 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class ReportingResource extends Resource
+class UserResource extends Resource
 {
-    protected static ?string $model = Reporting::class;
+    protected static ?string $model = User::class;
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 4;
 
-    protected static ?string $navigationIcon = 'heroicon-o-inbox-stack';
-
-    public static function canCreate(): bool
-    {
-        return false;
-    }
+    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                TextInput::make('passport')->readOnly(),
-                TextInput::make('report_date')->readOnly(),
-                TextInput::make('report_description')->readOnly(),
-                TextInput::make('location')->readOnly(),
+                TextInput::make('name')->required(),
+                TextInput::make('email')->required()->unique(ignoreRecord: true)->disabledOn('edit'),
+                TextInput::make('password')->confirmed()->password()->revealable()->required()->hiddenOn('edit'),
+                TextInput::make('password_confirmation')->password()->revealable()->required()->hiddenOn('edit'),
             ]);
     }
 
@@ -39,9 +34,8 @@ class ReportingResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('passport')->sortable()->searchable(),
-                TextColumn::make('report_date')->sortable()->searchable(),
-                TextColumn::make('location')->sortable()->searchable(),
+                TextColumn::make('name'),
+                TextColumn::make('email'),
             ])
             ->filters([
                 //
@@ -66,8 +60,9 @@ class ReportingResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListReportings::route('/'),
-            'edit' => Pages\EditReporting::route('/{record}/edit'),
+            'index' => Pages\ListUsers::route('/'),
+            'create' => Pages\CreateUser::route('/create'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }

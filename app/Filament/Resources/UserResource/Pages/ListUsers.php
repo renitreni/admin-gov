@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\ReportingResource\Pages;
+namespace App\Filament\Resources\UserResource\Pages;
 
-use App\Filament\Resources\ReportingResource;
+use App\Filament\Resources\UserResource;
 use App\Livewire\AgencyAlert;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListReportings extends ListRecords
+class ListUsers extends ListRecords
 {
-    protected static string $resource = ReportingResource::class;
+    protected static string $resource = UserResource::class;
 
     protected function getHeaderActions(): array
     {
