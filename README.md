@@ -3,6 +3,6 @@
 - Worker
 
 # Objectives
-- control  for the deployment. If allowed  nila or hindi
-- monitor  system
+- control for the deployment. If allowed  nila or hindi
+- monitor system
 - rescue
