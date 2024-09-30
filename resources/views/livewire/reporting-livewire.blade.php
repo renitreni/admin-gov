@@ -1,8 +1,8 @@
 <div class="flex justify-center">
     <div
-        class="relative isolate overflow-hidden bg-gray-900 py-16 sm:py-24 lg:py-32 rounded-lg w-full lg:w-1/2 shadow-2xl">
+        class="relative isolate overflow-hidden bg-gray-900 py-16 sm:py-24 lg:py-10 rounded-lg w-full lg:w-1/2 shadow-2xl">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
-            <div wire:loading>
+            <div wire:loading wire:target="showPanel">
                 <div class="flex flex-row text-white font-bold w-full gap-2">
                     <div>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -16,7 +16,7 @@
             </div>
             @if (!$open)
                 <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2"
-                    wire:loading.remove>
+                    wire:loading.remove wire:target="showPanel">
                     <div class="max-w-xl lg:max-w-lg">
                         @if (session('status'))
                             <div class="text-3xl font-bold tracking-tight text-green-400 sm:text-4xl">
@@ -49,7 +49,7 @@
                                         <label class="text-red-500">{{ $message }}</label>
                                     @enderror
                                 </div>
-                                <button type="submit" wire:click='showPanel'
+                                <button type="submit" wire:click='showPanel' onclick="window.getGeo()"
                                     class="flex-none mt-3 rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
                                     Login
                                 </button>
@@ -61,7 +61,7 @@
                     </dl>
                 </div>
             @endif
-            @if ($open)
+            @if ($open == 1)
                 <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 lg:max-w-none">
                     <div class="grid grid-cols-1 gap-x-8 gap-y-8 lg:pt-2">
                         <div class="flex flex-col items-start gap-3" wire:loading.remove>
@@ -70,6 +70,12 @@
                             lat and lang
                             --}}
                             <div class="flex flex-col w-full">
+                                <div class="w-full text-center mb-10">
+                                    <a href="#" wire:click='showRescuePanel'
+                                        class="text-white hover:text-red-500 font-bold text-xl">
+                                        I need an Urgent Rescue
+                                    </a>
+                                </div>
                                 <div class="flex border border-gray-500 rounded-lg p-4 bg-white">
                                     <span class="relative flex h-3 w-3 mt-2">
                                         @if ($worker->agency->agency_status == 'good')
@@ -130,9 +136,9 @@
                                 <label>Report Details</label>
                                 <textarea type="text" required wire:model='reportDescription'
                                     class="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"></textarea>
-                                    @error('reportDescription')
-                                        <label class="text-red-500">{{ $message }}</label>
-                                    @enderror
+                                @error('reportDescription')
+                                    <label class="text-red-500">{{ $message }}</label>
+                                @enderror
                             </div>
                             <div class="flex flex-row mt-2">
                                 <button type="submit" wire:click='submitReport'
@@ -140,6 +146,40 @@
                                     Submit
                                 </button>
                                 <button type="submit" wire:click='cancelPanel'
+                                    class="flex-none rounded-md bg-gray-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @if ($open == 2)
+                <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 lg:max-w-none">
+                    <div class="grid grid-cols-1 gap-x-8 gap-y-8 lg:pt-2">
+                        <div class="flex flex-col items-start gap-3" wire:loading.remove>
+                            {{-- 
+                            Report Details
+                            lat and lang
+                            --}}
+                            <div class="flex flex-col w-full">
+                                <div class="ml-2 flex flex-col">
+                                    <label class="flex flex-col text-white font-bold w-ful">
+                                        Reason
+                                    </label>
+                                    <textarea wire:model='rescueDescription'
+                                        class="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm sm:leading-6"></textarea>
+                                    @error('rescueDescription')
+                                        <label class="text-red-500">{{ $message }}</label>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="flex flex-row mt-2">
+                                <button type="button" wire:click='submitRescue'
+                                    class="flex-none mr-2 rounded-md bg-red-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                                    Rescue
+                                </button>
+                                <button type="button" wire:click='cancelPanel'
                                     class="flex-none rounded-md bg-gray-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-500">
                                     Cancel
                                 </button>

@@ -3,8 +3,11 @@
 namespace App\Livewire;
 
 use App\Models\Reporting;
+use App\Models\Rescue;
 use App\Models\Worker;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class ReportingLivewire extends Component
@@ -23,6 +26,8 @@ class ReportingLivewire extends Component
 
     public $dateReport;
 
+    public $rescueDescription;
+
     public function mount()
     {
         if (app()->environment('local')) {
@@ -32,6 +37,12 @@ class ReportingLivewire extends Component
         }
         $this->dateReport = now()->format('Y-m-d');
         $this->open = 0;
+
+        if(session('panel')) {
+            $this->open = 1;
+            $this->worker = session('panel');
+            $this->js('window.getGeo()');
+        }
     }
 
     public function render()
@@ -56,6 +67,7 @@ class ReportingLivewire extends Component
         if (empty($this->worker)) {
             $this->addError('authentication', 'Details does not exist!');
         } else {
+            session(['panel' => $this->worker]);
             $this->open = 1;
             $this->js('window.getGeo()');
         }
@@ -65,6 +77,7 @@ class ReportingLivewire extends Component
     {
         $this->open = 0;
         $this->worker = null;
+        session()->forget('panel');
     }
 
     public function submitReport()
@@ -80,7 +93,31 @@ class ReportingLivewire extends Component
         $reporting->location = $this->location;
         $reporting->save();
 
+        session()->forget('panel');
         session()->flash('status', 'Thank you! Report submitted!');
+        $this->redirect('/reporting');
+    }
+
+    public function showRescuePanel()
+    {
+        $this->open = 2;
+    }
+
+    public function submitRescue() {
+        
+        $this->validate([
+            'rescueDescription' => 'required',
+        ]);
+
+        $reporting = new Rescue;
+        $reporting->passport = $this->passport;
+        $reporting->rescue_status = $this->dateReport;
+        $reporting->rescue_description = $this->rescueDescription;
+        $reporting->location = $this->location;
+        $reporting->save();
+
+        session()->forget('panel');
+        session()->flash('status', 'Rescue has been submitted! Wait for response.');
         $this->redirect('/reporting');
     }
 }
