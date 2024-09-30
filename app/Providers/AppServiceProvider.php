@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         FilamentAsset::register([
             Css::make('admin-css', Vite::useHotFile('admin.hot')
-               ->asset('resources/css/app.css','build'))
+                ->asset('resources/css/app.css', 'build')),
         ]);
     }
 }

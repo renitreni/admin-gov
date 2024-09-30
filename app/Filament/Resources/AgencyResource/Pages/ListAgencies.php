@@ -4,6 +4,7 @@ namespace App\Filament\Resources\AgencyResource\Pages;
 
 use App\Filament\Resources\AgencyResource;
 use App\Livewire\AgencyAlert;
+use App\Livewire\RescueAlert;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
@@ -22,6 +23,7 @@ class ListAgencies extends ListRecords
     {
         return [
             AgencyAlert::class,
+            RescueAlert::class
         ];
     }
 }

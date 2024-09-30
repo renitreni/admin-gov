@@ -15,6 +15,6 @@ class Rescue extends Model
         'location',
         'rescue_status',
         'rescue_remarks',
-        'edited_by'
+        'edited_by',
     ];
 }

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Filament\Resources\WorkerResource\Pages;
+namespace App\Filament\Resources\RescueResource\Pages;
 
-use App\Filament\Resources\WorkerResource;
+use App\Filament\Resources\RescueResource;
 use App\Livewire\AgencyAlert;
 use App\Livewire\RescueAlert;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
-class ListWorkers extends ListRecords
+class ListRescues extends ListRecords
 {
-    protected static string $resource = WorkerResource::class;
+    protected static string $resource = RescueResource::class;
 
     protected function getHeaderActions(): array
     {

@@ -6,8 +6,6 @@ use App\Models\Reporting;
 use App\Models\Rescue;
 use App\Models\Worker;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class ReportingLivewire extends Component
@@ -38,7 +36,7 @@ class ReportingLivewire extends Component
         $this->dateReport = now()->format('Y-m-d');
         $this->open = 0;
 
-        if(session('panel')) {
+        if (session('panel')) {
             $this->open = 1;
             $this->worker = session('panel');
             $this->js('window.getGeo()');
@@ -103,15 +101,16 @@ class ReportingLivewire extends Component
         $this->open = 2;
     }
 
-    public function submitRescue() {
-        
+    public function submitRescue()
+    {
+
         $this->validate([
             'rescueDescription' => 'required',
         ]);
 
         $reporting = new Rescue;
         $reporting->passport = $this->passport;
-        $reporting->rescue_status = $this->dateReport;
+        $reporting->rescue_status = 'rescue';
         $reporting->rescue_description = $this->rescueDescription;
         $reporting->location = $this->location;
         $reporting->save();
