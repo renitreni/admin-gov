@@ -4,7 +4,6 @@ namespace App\Providers\Filament;
 
 use App\Livewire\AgencyAlert;
 use App\Livewire\StatsOverview;
-use EightyNine\FilamentPageAlerts\FilamentPageAlertsPlugin;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -57,6 +56,6 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->sidebarCollapsibleOnDesktop()
-            ->plugin(FilamentPageAlertsPlugin::make());
+            ->plugin(\EightyNine\FilamentPageAlerts\FilamentPageAlertsPlugin::make());
     }
 }
