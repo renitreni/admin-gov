@@ -23,7 +23,7 @@ class ListUsers extends ListRecords
     {
         return [
             AgencyAlert::class,
-            RescueAlert::class
+            RescueAlert::class,
         ];
     }
 }

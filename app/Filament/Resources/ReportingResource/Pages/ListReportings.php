@@ -23,7 +23,7 @@ class ListReportings extends ListRecords
     {
         return [
             AgencyAlert::class,
-            RescueAlert::class
+            RescueAlert::class,
         ];
     }
 }

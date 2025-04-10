@@ -38,9 +38,6 @@ RUN pecl install redis && docker-php-ext-enable redis
 # Install memcached extension
 RUN pecl install memcached && docker-php-ext-enable memcached
 
-# Install pcov extension
-RUN pecl install pcov && docker-php-ext-enable pcov
-
 # Install all required PHP extensions
 RUN install-php-extensions \
     exif \ 
@@ -75,13 +72,18 @@ WORKDIR /var/www/html
 
 COPY . .
 
+RUN php artisan optimize && php artisan storage:link
+
 # Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache /var/www/html/storage/logs \
-    && chmod -R 777 /var/www/html/storage \
-    && chmod -R 775 /var/www/html/bootstrap/cache
+RUN chmod -R 777 /var/www/html/storage \
+    && chmod -R 775 /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage/logs
 
 # Copy supervisor configuration
 COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Ensure supervisor log directory exists and is writable
+RUN mkdir -p /var/log/supervisor && chmod -R 775 /var/log/supervisor
 
 # Expose port 9000 for PHP-FPM
 EXPOSE 9000
