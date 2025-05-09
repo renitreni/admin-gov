@@ -64,13 +64,16 @@ RUN echo "memory_limit=512M" > /usr/local/etc/php/conf.d/memory-limit.ini \
     && echo "post_max_size=100M" >> /usr/local/etc/php/conf.d/upload-limit.ini \
     && echo "max_execution_time=120" > /usr/local/etc/php/conf.d/execution-time.ini
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-
 # Set working directory
 WORKDIR /var/www/html
 
 COPY . .
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
+# Install Composer dependencies
+RUN composer install --no-dev --optimize-autoloader
 
 RUN php artisan optimize && php artisan storage:link
 

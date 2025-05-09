@@ -59,6 +59,7 @@ services:
     volumes:
       - .:/var/www/html
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/ssl:/etc/nginx/ssl
     ports:
       - "80:80"
     networks:

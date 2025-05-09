@@ -13,5 +13,6 @@
             .listen(".App\\Events\\RescueEvent", function(data) {
                 alert(JSON.stringify(data));
             });
+        console.log('Initialize echo');
     </script>
 </div>
