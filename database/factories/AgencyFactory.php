@@ -19,6 +19,9 @@ class AgencyFactory extends Factory
         return [
             'agency_name' => fake()->company(),
             'agency_status' => fake()->randomElement(['good', 'warning', 'banned']),
+            'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->phoneNumber(),
+            'address' => fake()->address(),
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Livewire\Workers;
 
 use App\Events\RescueEvent;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class EmergencyButtonLivewire extends Component
@@ -18,6 +19,11 @@ class EmergencyButtonLivewire extends Component
 
     public function sendEmergency()
     {
-        broadcast(new RescueEvent(['person' => '1', 'location' => "https://www.google.com/maps?q=$this->lat,$this->lng"]));
+        broadcast(new RescueEvent(
+            [
+                'person' => Auth::id(),
+                'location' => "https://www.google.com/maps?q=$this->lat,$this->lng"
+            ]
+        ));
     }
 }

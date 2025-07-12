@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Models\Rescue;
+use App\Models\Worker;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -17,6 +19,17 @@ class RescueEvent implements ShouldBroadcast
 
     public function __construct($message)
     {
+        $worker = Worker::find($message['person']);
+        Rescue::updateOrCreate([
+            'passport' => $worker->passport_number,
+            'rescue_status' => 'pending',
+        ],
+        [
+            'passport' => $worker->passport_number,
+            'rescue_description'=> 'From Urgent Response : ' . $worker->fullname,
+            'location' => $message['location'],
+            'rescue_status' => 'pending',
+        ]);
         $this->message = $message;
     }
 

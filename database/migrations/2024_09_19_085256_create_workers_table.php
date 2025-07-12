@@ -31,6 +31,9 @@ return new class extends Migration
             $table->string('emergency_contact_phone')->nullable();
             $table->string('emergency_contact_relationship')->nullable();
             $table->foreignIdFor(Agency::class);
+            $table->string('username')->unique();
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps(); // created_at, updated_at
             $table->softDeletes();
         });

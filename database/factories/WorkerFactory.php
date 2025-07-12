@@ -31,6 +31,8 @@ class WorkerFactory extends Factory
             'emergency_contact_name' => fake()->name(),
             'emergency_contact_phone' => fake()->phoneNumber(),
             'emergency_contact_relationship' => 'relative',
+            'username' => fake()->unique()->userName(),
+            'password' => bcrypt('password'),
         ];
     }
 }

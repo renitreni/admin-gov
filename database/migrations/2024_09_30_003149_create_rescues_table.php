@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('rescue_status');
             $table->text('rescue_remarks')->nullable();
             $table->text('edited_by')->nullable();
-            $table->string('location')->nullable();
+            $table->longText('location')->nullable();
             $table->timestamps();
         });
     }

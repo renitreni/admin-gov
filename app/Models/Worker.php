@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Str;
 
-class Worker extends Model
+class Worker extends Authenticatable
 {
     use HasFactory, SoftDeletes;
+
+    protected $guard = 'worker';
 
     protected $fillable = [
         'first_name',
@@ -27,6 +29,13 @@ class Worker extends Model
         'emergency_contact_name',
         'emergency_contact_phone',
         'emergency_contact_relationship',
+        'username',
+        'password',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 
     public static function booted()

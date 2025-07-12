@@ -1,7 +1,6 @@
 <x-filament-widgets::widget>
     @if ($rescueCount)
-        <div class="bg-yellow-100 border-t-4 border-yellow-500 rounded-b text-yellow-900 px-4 py-3 shadow-md"
-            role="alert">
+        <div class="bg-yellow-100 border-t-4 border-yellow-500 rounded-b text-yellow-900 px-4 py-3 shadow-md" role="alert">
             <div class="flex">
                 <div class="py-1 mr-5">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

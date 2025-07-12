@@ -31,12 +31,12 @@ class RescueResource extends Resource
         return $form
             ->schema([
                 TextInput::make('passport')->disabled(),
-                TextInput::make('rescue_description')->disabled(),
-                TextInput::make('location')->disabled(),
+                TextInput::make('rescue_description')->disabled()->required(),
+                TextInput::make('location')->readOnly(),
                 Select::make('rescue_status')->options([
                     'rescue' => 'Rescue',
                     'resolved' => 'Resolved',
-                    'pedning' => 'Pending',
+                    'pending' => 'Pending',
                 ]),
                 Textarea::make('rescue_remarks')->columnSpanFull(),
             ]);

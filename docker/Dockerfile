@@ -73,7 +73,7 @@ COPY . .
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Install Composer dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install
 
 RUN php artisan optimize && php artisan storage:link
 

@@ -1,4 +1,5 @@
 <div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module">
         import Echo from 'https://cdn.jsdelivr.net/npm/laravel-echo@2.0.2/+esm'
 
@@ -10,9 +11,14 @@
         });
 
         var channel = window.Echo.channel('rescue-channel')
-            .listen(".App\\Events\\RescueEvent", function(data) {
-                alert(JSON.stringify(data));
+            .listen(".App\\Events\\RescueEvent", function (data) {
+                Swal.fire({
+                    title: 'New Agent Rescue Detected!',
+                    text: JSON.stringify(data),
+                    icon: 'error',
+                    confirmButtonText: 'Close'
+                });
+                window.Livewire.dispatch('rescueBanner');
             });
-        console.log('Initialize echo');
     </script>
 </div>
