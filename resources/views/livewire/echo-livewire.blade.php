@@ -13,8 +13,8 @@
         var channel = window.Echo.channel('rescue-channel')
             .listen(".App\\Events\\RescueEvent", function (data) {
                 Swal.fire({
-                    title: 'New Agent Rescue Detected!',
-                    text: JSON.stringify(data),
+                    title: 'New Urgent Rescue Detected!',
+                    text: data.location,
                     icon: 'error',
                     confirmButtonText: 'Close'
                 });
